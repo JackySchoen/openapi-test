@@ -1,0 +1,139 @@
+openapi: 3.0.3
+info:
+  title: RPG
+  description: Just a fun little test application where i like to experiment with node.js/express, typescript, etc
+  version: '1.0'
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: character
+    description: Everything about your character
+paths:
+  /character:
+    post:
+      tags: 
+        - character
+      summary: Create a new character
+      description: Create a new character
+      requestBody:
+        description: Create a new character
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/character'
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: pong
+        "400":
+          description: BAD REQUEST
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: pong
+components:
+  schemas:
+    character:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1321
+        name:
+          type: string
+          example: MyCharacterName
+        class:
+          type: string
+          example: rogue
+        hp:
+          type: integer
+          format: int64
+          example: 10
+        stamina:
+          type: integer
+          format: int64
+          example: 26
+        xp:
+          type: integer
+          format: int64
+          example: 281
+        inventory:
+          $ref: '#/components/schemas/inventory'
+      required:
+        - name
+        - class
+        - hp
+        - stamina
+        - xp
+        - inventory      
+    inventory:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1321
+        characterId:
+          type: integer
+          format: int64
+          example: 1023
+        weapons:
+          type: array
+          items: 
+            $ref: '#/components/schemas/weapon'
+        potions:
+          type: array
+          items: 
+            $ref: '#/components/schemas/potion'
+      required:
+        - characterId
+        - weapons
+        - potions
+    weapon:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1321
+        name:
+          type: string
+          example: long sword
+        class:
+          type: string
+          example: sword
+        damage:
+          type: integer
+          format: int64
+          example: 21
+        hp:
+          type: integer
+          format: int64
+          example: 10
+      required:
+        - name
+        - class
+        - damage
+        - hp
+    potion:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1321
+        name:
+          type: string
+          example: basic health potion
+        class:
+          type: string
+          example: health potion
+      required:
+        - name
+        - class
